@@ -1,0 +1,13 @@
+.image {
+        height: 200px;
+        position: relative;
+        left: 20px;
+}
+.circle1{
+
+    
+	stroke:green;
+	fill:white;
+	stroke-width:5;
+
+}
