@@ -44,6 +44,24 @@ var yAxis_generator_function=d3.svg.axis().orient("left").scale(yScale);
 
 canvas.append("g").call(yAxis_generator_function);
 
-// canvas.append("g").attr("class", "x axis") .attr("transform", "translate(0," + canvas_height + ")") .call(xAxis);
+var data_canvas= canvas.append("g").attr("class","data_canvas");
+var magicald3linkingthing =data_canvas.selectAll(".dot").data(nations, function(d)
+	{
+		return d.name;
+
+	});
+
+magicald3linkingthing.enter().append("circle").attr("class","dot").attr("r",5).attr("cx",function(d){
+
+	return xScale(d.income[0]);
+
+}).attr("cy",function(d){
+
+	return yScale(d.lifeExpectancy[0])
+
+});
+
+
+
 });
 
