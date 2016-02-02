@@ -2,6 +2,9 @@ var dataUrl="https://raw.githubusercontent.com/IsaKiko/D3-visualising-data/gh-pa
 d3.json(dataUrl,function (nations){
 	//console.log(nations);
 
+var filtered_nations=nations.map(function(nation_element){
+ return nation_element;
+});
 var chart_area =d3.select('#chart_area');
 
 
@@ -45,7 +48,36 @@ var yAxis_generator_function=d3.svg.axis().orient("left").scale(yScale);
 canvas.append("g").call(yAxis_generator_function);
 
 var data_canvas= canvas.append("g").attr("class","data_canvas");
-var magicald3linkingthing =data_canvas.selectAll(".dot").data(nations, function(d)
+
+d3.selectAll(".region_cb").on("change",function ()
+{
+	//check on checked item change
+	console.log(this);
+	var regiontype= this.value;
+	console.log(this.value);
+	var filtered_nations=nations.filter(function(nations_element)
+{
+
+  return nations_element.region==regiontype;
+
+ })
+	console.log(filtered_nations);
+
+});
+
+
+
+
+
+//all elements checked
+// var magicald3linkingthing =data_canvas.selectAll(".dot").data(nations, function(d)
+// 	{
+// 		return d.name;
+
+// 	});
+
+
+var magicald3linkingthing =data_canvas.selectAll(".dot").data(filtered_nations, function(d)
 	{
 		return d.name;
 
