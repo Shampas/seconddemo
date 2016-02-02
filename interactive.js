@@ -93,8 +93,17 @@ d3.selectAll(".region_cb").on("change",function ()
   update();
 });
 
+var year_idx=parseInt(document.getElementById("year_slider").value);
+d3.select("#year_slider").on("input",function ()
+{
+	year_idx=parseInt(this.value);
+	console.log(year_idx);
+	update();
 
 
+})
+
+update();
 
 
 //all elements checked
@@ -111,15 +120,25 @@ var magicald3linkingthing =data_canvas.selectAll(".dot").data(filtered_nations, 
 
 	});
 
-magicald3linkingthing.enter().append("circle").attr("class","dot").attr("r",5).attr("cx",function(d){
+// magicald3linkingthing.enter().append("circle").attr("class","dot").attr("r",5).attr("cx",function(d){
 
-	return xScale(d.income[0]);
+// 	return xScale(d.income[0]);
 
-}).attr("cy",function(d){
+// }).attr("cy",function(d){
 
-	return yScale(d.lifeExpectancy[0])
+// 	return yScale(d.lifeExpectancy[0])
 
-}).style("fill",function (d)
+// }).style("fill",function (d)
+// {
+   
+//    // d3.select("#c20")
+//    // var a=["red", "green","yellow", "orange"];
+//    // 
+//    return colorScale(d.region);
+// });
+
+
+magicald3linkingthing.enter().append("circle").attr("class","dot").attr("r",5).style("fill",function (d)
 {
    
    // d3.select("#c20")
@@ -128,7 +147,20 @@ magicald3linkingthing.enter().append("circle").attr("class","dot").attr("r",5).a
    return colorScale(d.region);
 });
 
+
+
+
 magicald3linkingthing.exit().remove();
+
+magicald3linkingthing.transition().ease("linear").duration(200).attr("cx",function(d){
+
+ 	return xScale(d.income[year_idx-1950]);
+
+ }).attr("cy",function(d){
+
+ 	return yScale(d.lifeExpectancy[year_idx-1950])
+
+ });
 }
 
 });
