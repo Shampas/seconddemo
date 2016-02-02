@@ -8,7 +8,7 @@
 
 <body>
 <h1> The health and wealth of nations  </h1>
-<p id="chart_area">
+<p id="chart_area"></p>
 	<label>
 <input type="checkbox" name="region" class="region_cb" value="Sub-Saharan Africa" checked="checked"/> Sub-Saharan Africa
 <input type="checkbox" name="region" class="region_cb" value="Europe & Central Asia" checked="checked"/> Europe
@@ -18,7 +18,7 @@
 <input type="checkbox" name="region" class="region_cb" value="Middle East & North Africa" checked="checked"/>  Middle East and North Africa
 
 </label>
-</p>
+<input type="range" class="slider" id="year_slider" min=1950 max="2008" value="1979" step="1" >
 
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
  <script type="text/javascript" src="interactive.js"></script>
