@@ -5,6 +5,10 @@ d3.json(dataUrl,function (nations){
 var filtered_nations=nations.map(function(nation_element){
  return nation_element;
 });
+
+var nationsall=nations.map(function(nation_element){
+ return nation_element;
+});
 var chart_area =d3.select('#chart_area');
 
 
@@ -38,6 +42,7 @@ var XAxis_generator_function=d3.svg.axis().orient("bottom").scale(xScale);
 canvas.append("g").call(XAxis_generator_function).attr("transform","translate( 0," +canvas_height +")");
 
 
+ var colorScale=d3.scale.category20();
 
 var yScale=d3.scale.linear();
 yScale.domain([10,85]);
@@ -48,21 +53,44 @@ var yAxis_generator_function=d3.svg.axis().orient("left").scale(yScale);
 canvas.append("g").call(yAxis_generator_function);
 
 var data_canvas= canvas.append("g").attr("class","data_canvas");
+update();
 
 d3.selectAll(".region_cb").on("change",function ()
 {
 	//check on checked item change
-	console.log(this);
-	var regiontype= this.value;
-	console.log(this.value);
-	var filtered_nations=nations.filter(function(nations_element)
-{
+	// console.log(this);
+	 var regiontype= this.value;
+	// console.log(this.value);
+	console.log(this.checked);
 
-  return nations_element.region==regiontype;
+	if(this.checked)
+	{
 
- })
-	console.log(filtered_nations);
+		var new_nations=nations.filter(function (nations_element)
+		{
+			return nations_element.region==regiontype;
+		});
+		filtered_nations=filtered_nations.concat(new_nations);
+	}
+	else
+	{
+		filtered_nations=filtered_nations.filter(function (nations_element)
+		{
+			return nations_element.region!=regiontype;
+		});
+		
 
+	}
+// 	var filtered_nations=nations.filter(function(nations_element)
+// {
+
+//   return nations_element.region==regiontype;
+
+//  })
+	//console.log(nationsall);
+	console.log(filtered_nations.length);
+
+  update();
 });
 
 
@@ -76,7 +104,7 @@ d3.selectAll(".region_cb").on("change",function ()
 
 // 	});
 
-
+function update(){
 var magicald3linkingthing =data_canvas.selectAll(".dot").data(filtered_nations, function(d)
 	{
 		return d.name;
@@ -91,9 +119,17 @@ magicald3linkingthing.enter().append("circle").attr("class","dot").attr("r",5).a
 
 	return yScale(d.lifeExpectancy[0])
 
+}).style("fill",function (d)
+{
+   
+   // d3.select("#c20")
+   // var a=["red", "green","yellow", "orange"];
+   // 
+   return colorScale(d.region);
 });
 
-
+magicald3linkingthing.exit().remove();
+}
 
 });
 
